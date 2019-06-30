@@ -4,3 +4,5 @@ export const withDisplayName = (displayName: string) => (Comp: React.ComponentTy
   Comp.displayName = displayName;
   return Comp;
 };
+
+export type PropTypesOf<T> = T extends React.ComponentType<infer P> ? P : never;
