@@ -5,6 +5,7 @@ module.exports = {
     index: './src/index.ts',
     echarts: './src/echarts/index.ts',
     responsive: './src/responsive/index.tsx',
+    util: './src/util/index.ts',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
