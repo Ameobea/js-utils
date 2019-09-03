@@ -1,6 +1,6 @@
 {
   "name": "ameo-utils",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Various JavaScript/TypeScript utilities that I make use of in multiple projects",
   "main": "dist/index/index.js",
   "repository": "https://github.com/ameobea/js-utils",
@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "mkdir -p dist; rm -rf dist/* && tsc -m es6 --outDir dist --emitDeclarationOnly --declaration --allowJs false --rootDir src && webpack --config webpack.prod.js"
+    "build": "rm -rf dist && mkdir -p dist && tsc -m commonjs --outDir dist --declaration --allowJs false --rootDir src"
   },
   "devDependencies": {
     "@babel/core": "^7.5.4",
@@ -30,9 +30,7 @@
     "react": "^16.8.6",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
-    "typescript": "^3.5.3",
-    "webpack": "^4.35.3",
-    "webpack-cli": "^3.3.5"
+    "typescript": "^3.5.3"
   },
   "dependencies": {
     "react-responsive": "^7.0.0"
