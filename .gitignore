@@ -1,2 +1,8 @@
 node_modules
 dist
+echarts
+index.d.ts
+index.js*
+responsive
+types*
+util
