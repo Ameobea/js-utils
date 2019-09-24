@@ -20,3 +20,18 @@ export function useOnChange<T>(
     pred(val);
   }
 }
+
+/**
+ * A React hook that runs the provided callback exactly once per the lifecycle of the component it is called in.  It is
+ * called after the first mount of the component.
+ */
+export const useOnce = (cb: () => void) => {
+  const wasRun = useRef(false);
+
+  useEffect(() => {
+    if (!wasRun.current) {
+      cb();
+      wasRun.current = true;
+    }
+  });
+};
