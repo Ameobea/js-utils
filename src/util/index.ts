@@ -29,3 +29,9 @@ export class UnimplementedError extends Error {
     super(message || 'Not yet implemented');
   }
 }
+
+export class UnreachableException extends Error {
+  constructor(message?: string) {
+    super(message || 'Entered unreachable code');
+  }
+}
