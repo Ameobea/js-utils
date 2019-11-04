@@ -1,4 +1,5 @@
 import * as reactModule from './react';
+import { ArgumentsOf } from 'src/types';
 export * from './react';
 export const react = reactModule;
 
@@ -34,4 +35,26 @@ export class UnreachableException extends Error {
   constructor(message?: string) {
     super(message || 'Entered unreachable code');
   }
+}
+
+/**
+ * Returns a memoized version of the provided function that remembers the most recent set of arguments that it was called
+ * with and the result of the function called with those arguments.  If it is called again with the same arguments
+ * (referentially equal), the exact same return value as last time will be returned.
+ */
+export function memoizeOne<F extends (...args: any[]) => any>(fn: F): (...args: ArgumentsOf<F>) => ReturnType<F> {
+  let lastArgs: any[] | null = null;
+  let lastRes: ReturnType<F>;
+
+  const memoized = (...args: ArgumentsOf<F>): ReturnType<F> => {
+    if (lastArgs !== null && args.length === lastArgs.length && args.forEach((arg, i) => arg === lastArgs![i])) {
+      return lastRes;
+    }
+
+    lastArgs = args;
+    lastRes = fn(...args);
+    return lastRes;
+  };
+
+  return memoized;
 }
