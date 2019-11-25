@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { memoizeOne } from 'util';
 
 export const withDisplayName = (displayName: string) => (Comp: React.ComponentType<any>) => {
   Comp.displayName = displayName;
@@ -34,4 +35,13 @@ export const useOnce = (cb: () => void) => {
       wasRun.current = true;
     }
   });
+};
+
+export const useUniqueId = () => {
+  const value = useRef('');
+  useEffect(() => {
+    value.current = btoa(Math.random().toString()).replace(/=/g, '');
+  }, []);
+
+  return value.current;
 };
