@@ -1,6 +1,6 @@
 {
   "name": "ameo-utils",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "description": "Various JavaScript/TypeScript utilities that I make use of in multiple projects",
   "main": "dist/index/index.js",
   "repository": "https://github.com/ameobea/js-utils",
