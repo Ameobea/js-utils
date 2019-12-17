@@ -1,7 +1,8 @@
-import React, { useRef, useEffect } from 'react';
-import { memoizeOne } from 'util';
+import React, { useRef, useEffect } from "react";
 
-export const withDisplayName = (displayName: string) => (Comp: React.ComponentType<any>) => {
+export const withDisplayName = (displayName: string) => (
+  Comp: React.ComponentType<any>
+) => {
   Comp.displayName = displayName;
   return Comp;
 };
@@ -38,10 +39,36 @@ export const useOnce = (cb: () => void) => {
 };
 
 export const useUniqueId = () => {
-  const value = useRef('');
+  const value = useRef("");
   useEffect(() => {
-    value.current = btoa(Math.random().toString()).replace(/=/g, '');
+    value.current = btoa(Math.random().toString()).replace(/=/g, "");
   }, []);
 
   return value.current;
 };
+
+type ANewTabProps = {
+  to: string;
+  text?: string;
+  noreferrer?: boolean;
+} & React.HTMLProps<HTMLAnchorElement>;
+
+/**
+ * Link that opens in a new tab.
+ */
+export const ANewTab: React.FC<ANewTabProps> = ({
+  to,
+  children,
+  text,
+  noreferrer = false,
+  ...props
+}) => (
+  <a
+    href={to}
+    target="_blank"
+    rel={`noopener${noreferrer ? " noreferrer" : ""}`}
+    {...props}
+  >
+    {children || text || ""}
+  </a>
+);
