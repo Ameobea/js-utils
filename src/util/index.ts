@@ -27,7 +27,7 @@ export const mapObjToMap = <T, R>(obj: { [key: string]: T }, pred: (x: T) => R):
 export const isNil = (x: any) => x === null || x === undefined;
 
 export const filterNils = <T>(arr: (T | null | undefined)[]): T[] =>
-  arr.filter(x => !isNil(x)) as T[];
+  arr.filter((x) => !isNil(x)) as T[];
 
 export class UnimplementedError extends Error {
   constructor(message?: string) {
@@ -67,4 +67,32 @@ export function memoizeOne<F extends (...args: any[]) => any>(
   };
 
   return memoized;
+}
+
+export class AsyncOnce<T> {
+  private getter: () => Promise<T>;
+  private pending: Promise<T> | null = null;
+  private res: null | { value: T };
+
+  public constructor(getter: () => Promise<T>) {
+    this.getter = getter;
+  }
+
+  public async get(): Promise<T> {
+    if (this.res) {
+      return this.res.value;
+    }
+    if (this.pending) {
+      return this.pending;
+    }
+
+    this.pending = new Promise((resolve) =>
+      this.getter().then((res) => {
+        this.res = { value: res };
+        this.pending = null;
+        resolve(res);
+      })
+    );
+    return this.pending!;
+  }
 }
