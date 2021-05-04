@@ -1,9 +1,12 @@
 import * as reactModule from './react';
-import { ArgumentsOf } from 'src/types';
+import { ArgumentsOf } from '../types';
 export * from './react';
 export const react = reactModule;
 
-export const mapObj = <T, R>(obj: { [key: string]: T }, pred: (x: T) => R): { [key: string]: R } => {
+export const mapObj = <T, R>(
+  obj: { [key: string]: T },
+  pred: (x: T) => R
+): { [key: string]: R } => {
   const mappedObj: { [key: string]: R } = {};
   Object.entries(obj).forEach(([key, val]) => {
     mappedObj[key] = pred(val);
@@ -23,7 +26,8 @@ export const mapObjToMap = <T, R>(obj: { [key: string]: T }, pred: (x: T) => R):
 
 export const isNil = (x: any) => x === null || x === undefined;
 
-export const filterNils = <T>(arr: (T | null | undefined)[]): T[] => arr.filter(x => !isNil(x)) as T[];
+export const filterNils = <T>(arr: (T | null | undefined)[]): T[] =>
+  arr.filter(x => !isNil(x)) as T[];
 
 export class UnimplementedError extends Error {
   constructor(message?: string) {
@@ -42,12 +46,18 @@ export class UnreachableException extends Error {
  * with and the result of the function called with those arguments.  If it is called again with the same arguments
  * (referentially equal), the exact same return value as last time will be returned.
  */
-export function memoizeOne<F extends (...args: any[]) => any>(fn: F): (...args: ArgumentsOf<F>) => ReturnType<F> {
+export function memoizeOne<F extends (...args: any[]) => any>(
+  fn: F
+): (...args: ArgumentsOf<F>) => ReturnType<F> {
   let lastArgs: any[] | null = null;
   let lastRes: ReturnType<F>;
 
   const memoized = (...args: ArgumentsOf<F>): ReturnType<F> => {
-    if (lastArgs !== null && args.length === lastArgs.length && args.forEach((arg, i) => arg === lastArgs![i])) {
+    if (
+      lastArgs !== null &&
+      args.length === lastArgs.length &&
+      args.forEach((arg, i) => arg === lastArgs![i])
+    ) {
       return lastRes;
     }
 
